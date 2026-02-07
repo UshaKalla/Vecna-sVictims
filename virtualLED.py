@@ -1,3 +1,5 @@
+# LedArray class that creates a simulation of what the actual LED matrix should do based
+# on the Camera class by graphing each LED as a point on a scatterplot in matplotlib
 import numpy as np 
 import os
 import pandas as pd
@@ -30,6 +32,7 @@ class LedArray:
         self.width = 12
         self.height = 6
 
+    # initialize the LED plot
     def plot_leds(self): 
         index=0
         while index<self.LEDs.size:
@@ -43,7 +46,7 @@ class LedArray:
         plt.tight_layout()
         plt.show(block=False)
 
-
+    # update the LED graph based on which turned on or not
     def graphUpdate(self,array,seconds):
         index = 0
         while index<self.width*self.height:

@@ -1,3 +1,5 @@
+# Camera class that uses computer camera and isolates all red detected
+# also creates a scaled mask from the red isolating mask to turn on LED matrix
 import numpy as np 
 import os
 import pandas as pd
@@ -15,7 +17,6 @@ class Camera:
 
     def camera_on(self):
         # open camera and start reading
-        #while True:
         ret_mask, frame_mask = self.cap.read()
         self.cam_width=(int)(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.cam_height=(int)(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -37,14 +38,7 @@ class Camera:
         cv2.imshow('masking',result)
 
         # include LEDmask in object class
-        # scaledmask = scale_mask(cam_width,cam_height,12,6,mask)
         self.redmask=mask.copy()
-
-        #     if cv2.waitKey(1)==ord('q'):
-        #         break
-
-        # self.cap.release()
-        # cv2.destroyAllWindows()
 
     def scale_mask(self,width,height,scale_width,scale_height,mask):
         scaled_m=np.zeros(shape=(scale_width,scale_height))

@@ -6,6 +6,8 @@ This project is inspired by the iconic Lite Brite scene from Stranger Things Sea
 We created a hand-wired LED matrix (5 rows × 12 columns) where individual LEDs can be turned on based on finger movements detected by a camera. The concept allows users to “draw” messages in real-time using hand motion, similar to how the characters communicated in the show.
 
 To Run Simulation (camera and digital representation of LEDs): Open main.py and run.
+To Run Only LED Simulation: Open main-ledsim.py
+To Run Only Camera Simulation: Open main-cam.py
 To Run Physical LED Matrix: contruct a 12x6 multiplexed LED matrix on a breadboard.
 
 Features
