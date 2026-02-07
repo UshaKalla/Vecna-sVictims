@@ -15,38 +15,38 @@ class Camera:
 
     def camera_on(self):
         # open camera and start reading
-        while True:
-            ret_mask, frame_mask = self.cap.read()
-            self.cam_width=(int)(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-            self.cam_height=(int)(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        #while True:
+        ret_mask, frame_mask = self.cap.read()
+        self.cam_width=(int)(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.cam_height=(int)(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-            # set the cascade frame to gray scale (requires gray scale to work)
-            gray = cv2.cvtColor(frame_mask, cv2.COLOR_BGR2GRAY)
-            hsv = cv2.cvtColor(frame_mask, cv2.COLOR_BGR2HSV)
-            
-            # masking details
-            lower_red1 = np.array([0, 120, 120])
-            upper_red1 = np.array([10, 255, 255])
-            lower_red2 = np.array([160, 120, 120])
-            upper_red2 = np.array([180, 255, 255])
-            mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
-            mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
-            mask = mask1+mask2
-            result = cv2.bitwise_and(frame_mask,frame_mask,mask=mask)
+        # set the cascade frame to gray scale (requires gray scale to work)
+        gray = cv2.cvtColor(frame_mask, cv2.COLOR_BGR2GRAY)
+        hsv = cv2.cvtColor(frame_mask, cv2.COLOR_BGR2HSV)
+        
+        # masking details
+        lower_red1 = np.array([0, 120, 120])
+        upper_red1 = np.array([10, 255, 255])
+        lower_red2 = np.array([160, 120, 120])
+        upper_red2 = np.array([180, 255, 255])
+        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        mask = mask1+mask2
+        result = cv2.bitwise_and(frame_mask,frame_mask,mask=mask)
 
-            cv2.imshow('masking',result)
+        cv2.imshow('masking',result)
 
-            # include LEDmask in object class
-            # scaledmask = scale_mask(cam_width,cam_height,12,6,mask)
-            self.redmask=mask.copy()
+        # include LEDmask in object class
+        # scaledmask = scale_mask(cam_width,cam_height,12,6,mask)
+        self.redmask=mask.copy()
 
-            if cv2.waitKey(1)==ord('q'):
-                break
+        #     if cv2.waitKey(1)==ord('q'):
+        #         break
 
-        self.cap.release()
-        cv2.destroyAllWindows()
+        # self.cap.release()
+        # cv2.destroyAllWindows()
 
-    def scale_mask(width,height,scale_width,scale_height,mask):
+    def scale_mask(self,width,height,scale_width,scale_height,mask):
         scaled_m=np.zeros(shape=(scale_width,scale_height))
         x=(int)(width/scale_width)+.5
         y=(int)(height/scale_height)
@@ -67,7 +67,7 @@ class Camera:
         j=0
         while i<(scale_height):
             while j<(scale_width):
-                scaled_m[i,j]=scaled_m[i,j]/(x*y)
+                scaled_m[j,i]=scaled_m[j,i]/(x*y)
                 j=j+1
             j=0
             i=i+1
@@ -76,10 +76,10 @@ class Camera:
         j=0
         while i<(scale_height):
             while j<(scale_width):
-                if scaled_m[i,j]>0.5:
-                    scaled_m[i,j]=1
+                if scaled_m[j,i]>0.5:
+                    scaled_m[j,i]=1
                 else:
-                    scaled_m[i,j]=0
+                    scaled_m[j,i]=0
                 j=j+1
             j=0
             i=i+1
