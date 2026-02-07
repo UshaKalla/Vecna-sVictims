@@ -1,4 +1,6 @@
 from surveillance import *
 from virtualLED import *
 
-camera_on()
+cap = cv2.VideoCapture(0)
+camera = Camera(cap)
+camera.camera_on()
