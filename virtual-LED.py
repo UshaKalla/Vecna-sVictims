@@ -12,6 +12,7 @@ LEDs = np.zeros(shape=72)
 width = 12
 height = 6
 
+
 def get_col(index,width):
     return (int)(index/width)
 
@@ -23,7 +24,8 @@ def get_index(width,row,col):
 
 def turn_on(width,row,col):
     plt.scatter(row+1,col+1,color='Yellow')
-    time.sleep(10)
+
+def turn_off(width,row,col):
     plt.scatter(row+1,col+1,color='Gray')
 
 # Plot first column as scatter points
@@ -36,15 +38,30 @@ plt.ylim(0,8)
 plt.title("LED Array")
 plt.legend()
 
-def graphUpdate(i):
-    turn_on(width,3,4)
+def graphUpdate(width,row,col,seconds):
 
 
-plt.show()
+    while True:
 
-# while True:
-#     turn_on(width,3,4)
-#     time.sleep(10)
+        # to fix
+        for led in LEDs:
+            turn_on(width,row,col)
+            plt.pause(seconds)
+            turn_off(width,row,col)
+            plt.pause(seconds)
+
+        # update graph
+        plt.draw()
+        plt.pause(.1)
+
+        # display graph
+        plt.tight_layout()
+        plt.show(block=False)
+
+if __name__ == '__main__':
+    print("Initializing test")
+
+    graphUpdate()
 
 
 
