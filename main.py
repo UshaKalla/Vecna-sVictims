@@ -1,5 +1,4 @@
-print("hello")
-print("SUP")
-print("Hello")
-print("HelloWorld('print')")
-print("this should be in a branch")
+from surveillance import *
+from virtualLED import *
+
+camera_on()
